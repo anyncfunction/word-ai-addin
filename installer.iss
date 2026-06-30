@@ -14,7 +14,7 @@ AppPublisher={#MyAppPublisher}
 DefaultDirName={localappdata}\AI-Word-Addin
 DefaultGroupName={#MyAppName}
 DisableProgramGroupPage=yes
-OutputDir=.\output
+OutputDir=.\build\installer
 OutputBaseFilename=AI-Word-Setup-{#MyAppVersion}
 Compression=lzma2
 SolidCompression=yes
@@ -58,11 +58,13 @@ Filename: "{code:FindWord}"; Flags: nowait postinstall skipifsilent; Description
 procedure KillRunningInstance;
 var
   ResultCode: Integer;
+  Retry: Integer;
 begin
-  if Exec(ExpandConstant('{sys}\taskkill.exe'), '/f /im ai-word-server.exe > nul 2>&1', '', SW_HIDE, ewWaitUntilTerminated, ResultCode) then
+  Exec(ExpandConstant('{sys}\taskkill.exe'), '/f /im ai-word-server.exe', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+  // Wait for process to fully exit and release file handles
+  for Retry := 0 to 14 do
   begin
-    // Allow a moment for the process to release file handles
-    Sleep(500);
+    Sleep(200);
   end;
 end;
 
