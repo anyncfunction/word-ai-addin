@@ -51,7 +51,7 @@ Name: "{userprograms}\{#MyAppName}\AI Writing Assistant"; Filename: "{app}\ai-wo
 Name: "{userprograms}\{#MyAppName}\Uninstall AI Writing Assistant"; Filename: "{uninstallexe}"
 
 [Run]
-Filename: "{app}\ai-word-server.exe"; WorkingDir: "{app}"; Flags: runhidden; Description: "Start AI Writing Assistant service"
+Filename: "{app}\ai-word-server.exe"; WorkingDir: "{app}"; Flags: runhidden nowait; Description: "Start AI Writing Assistant service"
 Filename: "{code:FindWord}"; Flags: nowait postinstall skipifsilent; Description: "Open Microsoft Word"
 
 [Code]
