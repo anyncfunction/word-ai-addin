@@ -1,0 +1,7 @@
+﻿dist/ai-word-server.exe
+output/*.exe
+node_modules/
+.certs/
+.ispp/
+*.log
+sea-prep.blob
