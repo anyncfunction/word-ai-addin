@@ -55,6 +55,23 @@ Filename: "{app}\ai-word-server.exe"; WorkingDir: "{app}"; Flags: runhidden; Des
 Filename: "{code:FindWord}"; Flags: nowait postinstall skipifsilent; Description: "Open Microsoft Word"
 
 [Code]
+procedure KillRunningInstance;
+var
+  ResultCode: Integer;
+begin
+  if Exec(ExpandConstant('{sys}\taskkill.exe'), '/f /im ai-word-server.exe > nul 2>&1', '', SW_HIDE, ewWaitUntilTerminated, ResultCode) then
+  begin
+    // Allow a moment for the process to release file handles
+    Sleep(500);
+  end;
+end;
+
+function InitializeSetup: Boolean;
+begin
+  KillRunningInstance;
+  Result := True;
+end;
+
 function FindWord(Param: String): String;
 var
   Paths: array[0..5] of String;
